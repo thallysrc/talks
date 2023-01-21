@@ -1,7 +1,7 @@
 """
 
-Not wrapping the zip_code example,
-wrap behavior for a primitive inside a class
+Not wrapping the zip_code, so person had to deal with a behavior that is not
+his responsibility
 
 """
 from dataclasses import dataclass
@@ -15,6 +15,14 @@ class Person:
         if not self.zip_code:
             print("invalid")
 
+
+class Supplier:
+    company: str
+    zip_code: int
+
+    def validate_zip_code(self):
+        if not self.zip_code:
+            print("invalid")
 
 """
 
@@ -41,8 +49,10 @@ class Person2:
     name: str
     zip_code: ZipCode
 
-    def __init__(self, name, code):
-        self.name = name
-        self.zip_code = code
+@dataclass
+class Supplier2:
+    name: str
+    zip_code: ZipCode
 
-p = Person2("jaskier codes", ZipCode(0))
+supplier = Supplier2("jaskier codes", ZipCode(10))
+person = Person2("Dudu", ZipCode(None))

@@ -1,18 +1,3 @@
-# 4 first class collection
-class Bill:
-    def __init__(self):
-        self._payments = []
-        self._attachments = []
-
-    def add_payment(self, payment):
-        self._payments.append(payment)
-
-    def add_attachment(self, attachment):
-        self._attachments.append(attachment)
-
-
-
-
 from dataclasses import dataclass
 from typing import List
 
@@ -26,7 +11,7 @@ class PaymentCollection:
     def __init__(self):
         self._payments: List[Payment] = []
 
-    def add(self, payment: dict):
+    def add(self, payment: Payment) -> None:
         if payment.mode == 3:
             raise Exception("Not supportted payment mode")
 
@@ -39,36 +24,18 @@ class PaymentCollection:
         return sum([payment.value for payment in self._payments])
 
 
-class AttachmentCollection:
-    def __init__(self):
-        self._attachments = []
-
-    def add(self, file: bytes):
-        if len(file) > 5_000_000_000:
-            raise Exception("too big")
-        self._attachments.append(file)
-
-
-
-
 class Bill:
-    def __init__(self, payment, attachment):
+    def __init__(self, collection):
         self.value = 100
-        self._payments = []
-        self._payment_collection: PaymentCollection = payment
-        self._attachment_collection: AttachmentCollection = attachment
+        self._payment_collection: PaymentCollection = collection
 
-    def add_payment(self, payment):
+    def add_payment(self, payment) -> None:
         self._payment_collection.add(payment)
 
-    def total_payment(self):
+    def total_payment(self) -> int:
         return self._payment_collection.total()
 
     def get_all_payments(self) -> List[Payment]:
         return self._payment_collection.get_all()
 
-    def add_attachment(self, attachment):
-        self._attachment_collection.add(attachment)
-
-
-bill = Bill(payment=PaymentCollection(), attachment=AttachmentCollection())
+bill = Bill(collection=PaymentCollection())

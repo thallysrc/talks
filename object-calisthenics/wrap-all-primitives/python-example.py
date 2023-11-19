@@ -25,10 +25,8 @@ class Supplier:
             print("invalid")
 
 """
-
 Wrapping the behavior of zip_code inside their own class, so Person2,
 no longer need to be responsible for zip_code behavior
-
 """
 
 @dataclass
